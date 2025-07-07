@@ -1,1 +1,1 @@
-### End to End machine learning Proeject ###
+### End to End Deep learning Proeject ###
