@@ -135,7 +135,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.artifacts/
+.src/components/dl_model_trainer.py
 .env
 .envrc
 .venv
