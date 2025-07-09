@@ -90,12 +90,13 @@ class DataTransformation:
             logging.info("Data transformation complete")
             logging.info(f"Transformed training shape: {X_train_transformed.shape}")
             logging.info(f"Transformed test shape: {X_test_transformed.shape}")
+            
 
             # Save preprocessor object
             joblib.dump(preprocessor, self.data_transformation_config.preprocessor_path)
             logging.info(f"Saved preprocessor to {self.data_transformation_config.preprocessor_path}")
 
-            return X_train_transformed, y_train, X_test_transformed, y_test , self.data_transformation_config.preprocessor_path
+            return X_train_transformed, y_train, X_test_transformed, y_test, self.data_transformation_config.preprocessor_path
 
         except Exception as e:
             logging.error("Error during data transformation")

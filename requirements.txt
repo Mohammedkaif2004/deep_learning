@@ -6,4 +6,6 @@ scikit-learn
 tensorflow
 keras-tuner
 joblib
+flask
+requests
 #-e .
