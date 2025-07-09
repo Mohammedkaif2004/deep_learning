@@ -8,7 +8,6 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 from keras_tuner import RandomSearch
-from tensorflow.keras.callbacks import EarlyStopping
 
 from src.logger import logging
 from src.exception import CustomException
@@ -31,13 +30,14 @@ class DeepLearningModelTrainer:
             model = keras.Sequential()
             model.add(layers.Input(shape=(self.input_shape,)))
 
-            for i in range(hp.Int('num_layers', 2, 5)):
+            for i in range(hp.Int('num_layers', 2, 10)):
                 model.add(
                     layers.Dense(
                         units=hp.Int(f'units_{i}', min_value=32, max_value=256, step=32),
                         activation='relu'
                     )
                 )
+                model.add(layers.Dropout(rate=hp.Float('dropout_rate', min_value=0.1, max_value=0.5, step=0.1)))
 
             model.add(layers.Dense(1, activation='sigmoid'))  # For binary classification
 
@@ -78,9 +78,9 @@ class DeepLearningModelTrainer:
 
             tuner.search(
                 X_train, y_train,
-                epochs=50,
+                epochs=20,
                 validation_data=(X_test, y_test),
-                callbacks=[EarlyStopping(monitor='val_loss', patience=3)]
+                
             )
 
             best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
@@ -91,8 +91,7 @@ class DeepLearningModelTrainer:
             history = best_model.fit(
                 X_train, y_train,
                 validation_data=(X_test, y_test),
-                epochs=50,
-                callbacks=[EarlyStopping(monitor='val_loss', patience=5)]
+                epochs=50
             )
 
             # Evaluate and save model
