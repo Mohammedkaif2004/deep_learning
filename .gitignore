@@ -136,7 +136,6 @@ celerybeat.pid
 
 # Environments
 .src/components/dl_model_trainer.py
-.app.py
 .env
 .envrc
 .venv
